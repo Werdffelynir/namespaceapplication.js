@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="/demo/css/grid.css">
+    <link rel="stylesheet" href="/demo/css/main.css">
 
     <script src="/dist/na.bundle.js"></script>
     <script src="/demo/js/extensions/animation.js"></script>
@@ -28,69 +29,33 @@
 </div>
 <script>
 
-    const one = document.querySelector('.one');
-    const two = document.querySelector('.two');
-
 
     NamespaceApplication.require('base', [
         '/demo/js/module-one',
-        '/demo/js/module-two'
-    ], func, func);
+        '/demo/js/module-two',
+        '/demo/js/module-three',
+    ], onHandler, onHandler);
 
-    function func () {}
+    NamespaceApplication.require.start('base');
 
-    NamespaceApplication.extension('simple.one', function (App) {
-        return {a: 1}
-    });
+    function onHandler (list) {}
 
-    NamespaceApplication.extension('simple.two', function (App) {
-        return {a: 1}
-    });
-
-    NamespaceApplication.namespace('OuterNamespace', function (app) {
-        return {app};
-    });
-
-    const na = new NamespaceApplication({
+    const app = new NamespaceApplication({
         name: 'Application',
     });
 
-    na.namespace('InnerNamespace', function (app) {
-        const smod = {};
-        smod.init = function () {console.log(app)};
-        smod.timer = function () {};
-        return smod;
-    });
+    // app.require.start('base');
 
-    na.state.action('ui', (state, preload) => {
-        document.querySelector('[data-var="title"]').textContent = preload.title;
-        document.querySelector('[data-var="count"]').textContent = preload.count;
-        document.querySelector('[data-var="code"]').textContent = JSON.stringify(na.state.get('ui'));
-    });
-
-    na.state.action('activity', (state, preload) => {
-    });
-
-    na.state.action('activity_last', (state, preload) => {
-        // console.log('activity ', preload);
-        document.querySelector('[data-var="activity"]').append();
-    });
 
     function onClick (action) {
-        const ui = na.state.get('ui');
-        const activity = na.state.get('activity') || [];
-        const activity_last = na.state.get('activity.last') || [];
-        const count = (ui && ui.count ? ui.count :  0);
-        const title = (action + ' title').toUpperCase();
+
+        console.log(app);
 
         switch (action) {
             case 'start':
             case 'stop':
             case 'restart':
             case 'pause':
-                na.state.set('ui', {title, count: count + 1, auth: false});
-                na.state.set('activity', [...activity, ...[JSON.stringify({...location, ...{action}})]]);
-                na.state.set('activity_last', JSON.stringify({...location, ...{action}}));
                 break;
         }
     }
