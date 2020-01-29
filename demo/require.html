@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="/demo/css/main.css">
 
     <script src="/dist/na.bundle.js"></script>
-    <script src="/demo/js/extensions/animation.js"></script>
-    <script src="/demo/js/simples.js"></script>
 </head>
 <body>
 <div id="app">
@@ -30,26 +28,31 @@
 <script>
 
 
+
     NamespaceApplication.require('base', [
-        '/demo/js/module-one',
-        '/demo/js/module-two',
-        '/demo/js/module-three',
+        '/demo/js/MODULE_ONE',
+        '/demo/js/MODULE_TWO',
+        '/demo/js/MODULE_THREE',
     ], onHandler, onHandler);
 
     NamespaceApplication.require.start('base');
 
-    function onHandler (list) {}
+    function onHandler (list) {
+        console.log('list', list);
 
-    const app = new NamespaceApplication({
-        name: 'Application',
-    });
+        const app = new NamespaceApplication({
+            name: 'Application',
+        });
+    }
+
+
 
     // app.require.start('base');
 
 
     function onClick (action) {
 
-        console.log(app);
+        // console.log(app);
 
         switch (action) {
             case 'start':

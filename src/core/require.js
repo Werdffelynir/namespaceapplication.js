@@ -14,31 +14,19 @@ require.requireKey = null;
 require.requireStack = [];
 require.start = function (key) {
     key = key || require.requireKey;
-    if (key) {
-        if (key && require.requireStack[key])
-            load_scripts_recursive(0, key);
-        else
-            console.error("Require source not found! Key: " + key + " not exist!");
+
+    if (key && require.requireStack[key]) {
+        const stack = require.requireStack[key];
+        const max = stack.src.length - 1;
+
+        stack.src.forEach((src, i) => {
+            stack.elements.push(loadJS(src,() => {
+                if (max === i) {
+                    return stack.oncomplete(stack.elements);
+                }
+            }, stack.onerror));
+        });
     }
 };
-const load_scripts_recursive = function (i, key) {
-    const requires = require.requireStack[key];
-
-    if (requires.src[i]) {
-        if (!Array.isArray(requires.elements))
-            requires.elements = [];
-
-        requires.elements.push(loadJS(requires.src[i], function () {
-            load_scripts_recursive(++i, key);
-        }, requires.onerror));
-    }
-    else if (i === requires.src.length) {
-        requires.oncomplete.call(self, requires.elements);
-    }
-    else {
-        load_scripts_recursive(++i, key);
-    }
-};
-
 
 export default require;

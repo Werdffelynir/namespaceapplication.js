@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tasks</title>
+    <link rel="stylesheet" href="/demo/css/grid.css">
+    <link rel="stylesheet" href="/demo/css/main.css">
+
+    <script src="/dist/na.bundle.js"></script>
+</head>
+<body>
+<div id="app">
+    <div id="header">
+        <h1 class="text-center" data-var="title">&nbsp;</h1>
+        <h4 class="text-center" data-var="counter"></h4>
+    </div>
+    <div id="form" class="">
+        <div class="width-80">
+            <textarea  data-var="task" name="task" class="width-98">Blanditiis cumque deserunt ea itaque libero nemo neque, possimus quaerat saepe tempora tempore, ut voluptatem? Consectetur corporis fugiat nostrum quis tenetur veritatis?</textarea>
+        </div>
+        <div class="width-80">
+            <input type="range" min="1" max="10" data-var="priority" name="priority" value="5" class="width-98">
+        </div>
+        <div class="width-80">
+            <button data-var="send">Add task</button>
+        </div>
+    </div>
+
+    <div id="list" data-var="list">
+
+    </div>
+</div>
+<script>
+
+
+    const app = new NamespaceApplication({
+        name: 'Application',
+    });
+
+    const vars = new NamespaceApplication.search('[data-var]', 'data-var');
+
+    const state = {
+        ui: {},
+        list: [],
+        item: {},
+        title: 'Task manager',
+        counter: 0,
+    };
+
+    app.state.action('ui', (state, preload) => {});
+
+    app.state.action('list', (state, preload) => {
+        const fragment = app.fragment();
+        preload.forEach(function (itemData) {
+            fragment.append(createItem(itemData));
+        });
+        vars.list.textContent = '';
+        vars.list.append(fragment);
+    });
+
+    app.state.action('item', (state, preload) => {
+/*        if (preload.task) {
+            const item = createItem(preload);
+            vars.list.append(item);
+        }*/
+    });
+
+    app.state.action('title', (state, preload) => {
+        vars.title.textContent = preload;
+    });
+
+    app.state.action('counter', (state, preload) => {
+        vars.counter.textContent = preload;
+    });
+
+    app.state.push(state);
+
+    app.on(vars.list, 'click', (e) => {
+        app.each.filter(e.target, '[data-param]', function (element) {
+            const id = element.getAttribute('data-param');
+            console.log('id', id);
+        });
+    });
+
+    app.on(vars.send, 'click', () => {
+        const item = {
+            id: app.state.get('counter') || 0,
+            task: vars.task.value.trim(),
+            status: true,
+            priority: vars.priority.value,
+            date: (new Date()).getTime(),
+        };
+        if (item.task.length > 0) {
+            // vars.task.value = '';
+            // vars.priority.value = 5;
+            const list = app.state.get('list');
+            app.state.set('item',  item);
+            app.state.set('list', [...list, ...[item]]);
+            app.state.set('counter',  app.state.get('list').length);
+        }
+    });
+
+    function createItem(preload) {
+        const item = app.create('div', {class: 'item table', 'data-var': 'item', 'data-param': preload.id});
+        const itemTask = app.create('span', {class: 'width-70'}, '[#'+preload.id+'] ' + preload.task);
+        const itemStatus = app.create('span', {class: 'width-20'}, preload.status ? 'ON' : 'OFF');
+        const itemPriority = app.create('span', {}, preload.priority);
+        item.append(itemTask);
+        item.append(itemStatus);
+        item.append(itemPriority);
+        return item;
+    }
+
+</script>
+</body>
+</html>

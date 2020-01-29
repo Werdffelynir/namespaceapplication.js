@@ -16,10 +16,10 @@ module.init = function (thisInstance) {
         ext = module.stack[name];
 
         if (thisInstance && !ext.initialized) {
+            ext.initialized = true;
             ext.context = ext.callback.call(ext.callback, thisInstance);
-            if (!thisInstance)
-                thisInstance = {};
-            thisInstance[ext.name] = ext.context;
+            if (!thisInstance[ext.name])
+                thisInstance[ext.name] = ext.context;
         }
     }
 };

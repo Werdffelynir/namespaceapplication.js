@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="/demo/css/grid.css">
+    <link rel="stylesheet" href="/demo/css/main.css">
 
     <script src="/dist/na.bundle.js"></script>
-    <script src="/demo/js/extensions/animation.js"></script>
-    <script src="/demo/js/simples.js"></script>
 </head>
 <body>
 <div id="app">
@@ -18,7 +17,7 @@
         <button onclick="onClick('pause')">Pause</button>
     </div>
     <h1 class=" text-center" data-var="title"></h1>
-    <h2 class=" text-center" data-var="count"></h2>
+    <h2 class=" text-center" data-var="counter"></h2>
     <h4 class=" text-center" data-var="code"></h4>
     <h4 class=" text-center" data-var="activity"></h4>
     <div id="canvas">
@@ -28,102 +27,43 @@
 </div>
 <script>
 
-    const one = document.querySelector('.one');
-    const two = document.querySelector('.two');
 
-
-    NamespaceApplication.require('base', [
-        '/demo/js/module-one',
-        '/demo/js/module-two'
-    ], func, func);
-
-    function func () {}
-
-    NamespaceApplication.extension('simple.one', function (App) {
-        return {a: 1}
-    });
-
-    NamespaceApplication.extension('simple.two', function (App) {
-        return {a: 1}
-    });
-
-    NamespaceApplication.namespace('OuterNamespace', function (app) {
-        return {app};
-    });
-
-    const na = new NamespaceApplication({
+    const app = new NamespaceApplication({
         name: 'Application',
     });
 
-    na.namespace('InnerNamespace', function (app) {
-        const smod = {};
-        smod.init = function () {console.log(app)};
-        smod.timer = function () {};
-        return smod;
-    });
+    const vars = new NamespaceApplication.search('[data-var]', 'data-var');
 
-    na.state.action('ui', (state, preload) => {
-        document.querySelector('[data-var="title"]').textContent = preload.title;
-        document.querySelector('[data-var="count"]').textContent = preload.count;
-        document.querySelector('[data-var="code"]').textContent = JSON.stringify(na.state.get('ui'));
+    const state = {
+        ui: {},
+        list: {},
+        item: {},
+        title: 'default title',
+        counter: 0,
+    };
+    app.state.action('ui', (state, preload) => {});
+    app.state.action('list', (state, preload) => {});
+    app.state.action('item', (state, preload) => {});
+    app.state.action('title', (state, preload) => {
+        vars.title.textContent = preload;
     });
-
-    na.state.action('activity', (state, preload) => {
+    app.state.action('counter', (state, preload) => {
+        vars.counter.textContent = preload;
     });
-
-    na.state.action('activity_last', (state, preload) => {
-        // console.log('activity ', preload);
-        document.querySelector('[data-var="activity"]').append();
-    });
+    app.state.push(state);
 
     function onClick (action) {
-        const ui = na.state.get('ui');
-        const activity = na.state.get('activity') || [];
-        const activity_last = na.state.get('activity.last') || [];
-        const count = (ui && ui.count ? ui.count :  0);
-        const title = (action + ' title').toUpperCase();
-
+        app.state.set('counter',  app.state.get('counter') + 1);
         switch (action) {
             case 'start':
             case 'stop':
             case 'restart':
             case 'pause':
-                na.state.set('ui', {title, count: count + 1, auth: false});
-                na.state.set('activity', [...activity, ...[JSON.stringify({...location, ...{action}})]]);
-                na.state.set('activity_last', JSON.stringify({...location, ...{action}}));
+                app.state.set('title', action);
                 break;
         }
     }
 
-
-
-
-
-    // na.SuperModule.init()
-    // console.log('NamespaceApplication', na);
-    // na.require.start('base');
-    // console.log(state, preload);
-    // na.inject('[data-var="title"]', preload);
-    // console.dir(na.state);
-    //na.state.set('ui', {});
-    // na.state.set('ui', {title: 'false', count: 0, auth: false});
-    // const ui = na.state.get('ui');
-    // na.state.set('ui', {...ui, ...{count: ui.count + 1}});
-    // {title: 'false', count: , auth: false}
-
-    //na.state.set('ui', {title: false, top: false, auth: false});
-    //'ui.title', 'my title'
-    // na.state.set((source) => {
-    //     source.ui = {...source.ui, ...{title: false}};
-    //     return source.ui
-    // });
-
-    //const ui = na.state.get('ui');
-    // const ui_title = na.state.get('ui.title');
-
-    // console.log('ui', ui);
-    //console.log('ui_title', ui.title);
-    // na.state.ui = {...na.state.ui, ...{top: false, auth: false}};
 </script>
 </body>
 </html>
