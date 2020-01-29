@@ -7,6 +7,30 @@
     <link rel="stylesheet" href="/demo/css/main.css">
 
     <script src="/dist/na.bundle.js"></script>
+    <style>
+        .selected {
+            background: #004545;
+            color: aqua;
+        }
+        .item {
+            padding: 5px;
+            border-bottom: 1px solid #004545;
+        }
+        .button {
+            cursor: pointer;
+        }
+        [data-var="item-remove"] {
+            border-radius: 50%;
+            border: none;
+            background: #c20000;
+            color: white;
+            padding: 5px 10px;
+
+        }
+        [data-var="item-remove"]:hover {
+            background: #610000;
+        }
+    </style>
 </head>
 <body>
 <div id="app">
@@ -19,7 +43,7 @@
             <textarea  data-var="task" name="task" class="width-98">Blanditiis cumque deserunt ea itaque libero nemo neque, possimus quaerat saepe tempora tempore, ut voluptatem? Consectetur corporis fugiat nostrum quis tenetur veritatis?</textarea>
         </div>
         <div class="width-80">
-            <input type="range" min="1" max="10" data-var="priority" name="priority" value="5" class="width-98">
+            <input type="range" min="1" max="4" data-var="priority" name="priority" value="2" class="width-98">
         </div>
         <div class="width-80">
             <button data-var="send">Add task</button>
@@ -41,7 +65,7 @@
 
     const state = {
         ui: {},
-        list: [],
+        list: JSON.parse(localStorage.getItem('list')) || [],
         item: {},
         title: 'Task manager',
         counter: 0,
@@ -56,6 +80,7 @@
         });
         vars.list.textContent = '';
         vars.list.append(fragment);
+        localStorage.setItem('list', JSON.stringify(preload));
     });
 
     app.state.action('item', (state, preload) => {
@@ -77,8 +102,26 @@
 
     app.on(vars.list, 'click', (e) => {
         app.each.filter(e.target, '[data-param]', function (element) {
-            const id = element.getAttribute('data-param');
-            console.log('id', id);
+            const id = parseInt(element.getAttribute('data-param'));
+            const list = app.state.get('list');
+            const item = app.findObject(list, 'id', id);
+
+            if (e.target.getAttribute('data-var') === 'item-status') {
+                app.findObject(list, 'id', parseInt(id)).status = !item.status;
+                app.state.set('list', list);
+            }
+
+            if (e.target.getAttribute('data-var') === 'item-remove') {
+                const updateLst = list.filter((elem) => {
+                    return elem.id !== id;
+                });
+                app.state.set('list', updateLst);
+            }
+
+            app.queryAll('.item[data-param]').forEach((elem) => {elem.classList.remove('selected')});
+            if (element.getAttribute('data-var') === 'item') {
+                element.classList.add('selected');
+            }
         });
     });
 
@@ -92,8 +135,9 @@
         };
         if (item.task.length > 0) {
             // vars.task.value = '';
-            // vars.priority.value = 5;
+            vars.priority.value = 2;
             const list = app.state.get('list');
+
             app.state.set('item',  item);
             app.state.set('list', [...list, ...[item]]);
             app.state.set('counter',  app.state.get('list').length);
@@ -101,12 +145,28 @@
     });
 
     function createItem(preload) {
+        const priority = () => {
+            switch (parseInt(preload.priority)) {
+                case 1:
+                    return 'very-low';
+                case 2:
+                    return 'low';
+                case 3:
+                    return 'medium';
+                case 4:
+                    return 'high';
+            }
+        };
+        const buttonStatus = app.create('div', {class: 'button', 'data-var': 'item-status'}, preload.status ? 'Active' : 'Disabled');
+        const buttonRemove = app.create('div', {class: 'button', 'data-var': 'item-remove'}, 'x');
         const item = app.create('div', {class: 'item table', 'data-var': 'item', 'data-param': preload.id});
         const itemTask = app.create('span', {class: 'width-70'}, '[#'+preload.id+'] ' + preload.task);
-        const itemStatus = app.create('span', {class: 'width-20'}, preload.status ? 'ON' : 'OFF');
-        const itemPriority = app.create('span', {}, preload.priority);
+        const itemStatus = app.create('span', {class: 'width-20 text-center'}, buttonStatus);
+        const itemRemove = app.create('span', {class: 'width-5'}, buttonRemove);
+        const itemPriority = app.create('span', {}, priority());
         item.append(itemTask);
         item.append(itemStatus);
+        item.append(itemRemove);
         item.append(itemPriority);
         return item;
     }
