@@ -2,7 +2,7 @@ const path = require('path');
 
 
 // development or production
-const mode = 'development';
+const mode = 'production';
 
 module.exports = {
     entry: {
