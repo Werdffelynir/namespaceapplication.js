@@ -5,4 +5,4 @@ const animation = function (app) {
 animation.fps = 60;
 animation.move = () => {};
 
-NamespaceApplication.extension('animation', animation);
+NamespaceApplication.extension('Animation', animation);

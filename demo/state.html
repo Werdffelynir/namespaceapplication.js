@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/demo/css/grid.css">
+    <link rel="stylesheet" href="/demo/css/main.css">
+
+    <script src="/dist/na.bundle.js"></script>
+</head>
+<body>
+<div id="app">
+    <div id="panel">
+        <button onclick="onClick('start')">Start</button>
+        <button onclick="onClick('stop')">Stop</button>
+        <button onclick="onClick('restart')">Restart</button>
+        <button onclick="onClick('pause')">Pause</button>
+    </div>
+    <h1 class=" text-center" data-var="title"></h1>
+    <h2 class=" text-center" data-var="counter"></h2>
+    <h4 class=" text-center" data-var="code"></h4>
+    <h4 class=" text-center" data-var="activity"></h4>
+    <div id="canvas">
+        <div class="box one"></div>
+        <div class="box two"></div>
+    </div>
+</div>
+<script>
+
+
+    const app = new NamespaceApplication({
+        name: 'Application',
+    });
+
+    const vars = new NamespaceApplication.search('[data-var]', 'data-var');
+
+    const state = {
+        ui: {},
+        list: {},
+        item: {},
+        title: 'default title',
+        counter: 0,
+    };
+    app.state.action('ui', (state, preload) => {});
+    app.state.action('list', (state, preload) => {});
+    app.state.action('item', (state, preload) => {});
+    app.state.action('title', (state, preload) => {
+        vars.title.textContent = preload;
+    });
+    app.state.action('counter', (state, preload) => {
+        vars.counter.textContent = preload;
+    });
+    app.state.push(state);
+
+    function onClick (action) {
+        app.state.set('counter',  app.state.get('counter') + 1);
+        switch (action) {
+            case 'start':
+            case 'stop':
+            case 'restart':
+            case 'pause':
+                app.state.set('title', action);
+                break;
+        }
+    }
+
+</script>
+</body>
+</html>

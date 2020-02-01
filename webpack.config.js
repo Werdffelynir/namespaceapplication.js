@@ -1,10 +1,8 @@
 const path = require('path');
+const process = require('process');
 
 
-// development or production
-const mode = 'production';
-
-module.exports = {
+const config = {
     entry: {
         na: './src/index.js',
     },
@@ -12,7 +10,7 @@ module.exports = {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
     },
-    devtool: mode === 'production' ? 'hidden-source-map' : 'inline-source-map',
+    devtool: 'hidden-source-map',
     devServer: {
         contentBase: './dist',
     },
@@ -28,5 +26,12 @@ module.exports = {
         ],
     },
     plugins: [],
-    watch: true
+    watch: false
+};
+
+module.exports = function (env, argv) {
+    // @type argv.mode development | production
+    config.devtool = argv.mode === 'production' ? 'hidden-source-map' : 'inline-source-map';
+    config.watch = !!argv.watch;
+    return config;
 };

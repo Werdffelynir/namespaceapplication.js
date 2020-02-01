@@ -1,22 +1,25 @@
+import extension from './extension';
 
 
-const extension = function (name, callback, override) {
+const module = function (name, callback, override) {
     const ext = createObject(name, callback, override);
     if (typeof ext.callback === 'function') {
-        extension.stack[name] = ext;
+        module.stack[name] = ext;
     }
 };
 
-extension.stack = {};
+module.stack = {};
 
-extension.init = function (thisInstance) {
+module.init = function (thisInstance) {
     let name, ext;
-    for (name in extension.stack) {
-        ext = extension.stack[name];
+    for (name in module.stack) {
+        ext = module.stack[name];
 
         if (thisInstance && !ext.initialized) {
+            ext.initialized = true;
             ext.context = ext.callback.call(ext.callback, thisInstance);
-            thisInstance[ext.name] = ext.context;
+            if (!thisInstance[ext.name])
+                thisInstance[ext.name] = ext.context;
         }
     }
 };
@@ -33,4 +36,4 @@ const createObject = function (name, callback, override) {
     }
 };
 
-export default extension;
+export default module;

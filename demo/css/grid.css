@@ -92,7 +92,8 @@ a{text-decoration: none}
 
 
 /*STYLES*/
-*{font-family: "sans-serif","sans","Ubuntu Condensed","Ubuntu"; font-size: 95%}
+/**{font-family: "sans-serif","sans","Ubuntu Condensed","Ubuntu"; font-size: 95%}*/
+*{font-family: "sans-serif","sans","Ubuntu Condensed","Ubuntu"; }
 .button,
 button,
 select,
