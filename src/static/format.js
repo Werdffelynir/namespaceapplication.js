@@ -1,14 +1,32 @@
 
+import isNode from "./isNode";
+import defined from "./defined";
+import node2str from "./node2str";
 
-const format = function (string, formated) {
+
+/**
+ * Formatting of string, or maybe template builder
+ *
+ * Examples:
+ * .format("Hello {0}, your code is {1}!", ['Jade', 'Prefect']);
+ * .format("Hello {name}, your code is {mean}!", {name:'Jade', mean: 'Prefect'});
+ *
+ * @param string    String
+ * @param list  Array|Object
+ * @returns string
+ */
+const format = function (string, list) {
     let reg;
-    if (Array.isArray(formated))
+    if (Array.isArray(list))
         reg = new RegExp(/{(\d+)}/g);
-    else if (formated && typeof formated === 'object')
+    else if (list && typeof list === 'object')
         reg = new RegExp(/{(\w+)}/g);
 
     return string.replace(reg, function (match, number) {
-        return typeof formated[number] !== undefined ? formated[number] : match;
+        if (defined(list[number]) && isNode(list[number]))
+            list[number] = node2str(list[number]);
+
+        return typeof list[number] !== undefined ? list[number] : match;
     });
 };
 
