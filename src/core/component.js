@@ -1,12 +1,11 @@
 import merge from "../static/merge";
 
 
-const extension = function (config)
-{
+const component = function (config) {
     if (typeof config === 'string') {
-        return extension.list[config];
+        return component.list[config];
     } else {
-        const comp = extension.create(config);
+        const comp = component.create(config);
         if (typeof comp.init === 'function' && !comp.initialized){
             comp.initialized = true;
             comp.init();
@@ -15,15 +14,15 @@ const extension = function (config)
             comp.completed = true;
             comp.complete.call(comp, this);
         }
-        extension.list[comp.id] = comp;
+        component.list[comp.id] = comp;
     }
 };
 
-extension.register = function (instance)
+component.register = function (instance)
 {
     if (instance instanceof NamespaceApplication) {
-        Object.keys(extension.list).forEach((key) => {
-            const comp = extension.list[key];
+        Object.keys(component.list).forEach((key) => {
+            const comp = component.list[key];
             if (comp.complete && !comp.completed) {
                 comp.completed = true;
                 comp.complete.call(comp, instance);
@@ -32,9 +31,9 @@ extension.register = function (instance)
     }
 };
 
-extension.list = {};
+component.list = {};
 
-extension.create = function (config) {
+component.create = function (config) {
     return merge( {
         id: null,
         template: null,
@@ -48,4 +47,4 @@ extension.create = function (config) {
 };
 
 
-export default extension;
+export default component;

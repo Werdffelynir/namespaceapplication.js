@@ -1,48 +1,44 @@
 import typeOf from '../static/typeOf';
 
-let source = createSource();
-let sourceData = {};
-let actionsCallback = {};
 
-const state = function (key, data = null) {
-    return data ? state.set(key, data) : state.get(key)
+const state = function (key, data) {
+    return data === undefined ? state.get(key) : state.set(key, data);
 };
 
-state.init = function (thisInstance) {
-
-};
-
+state.callback = {};
+state.source = createSource();
+state.sourcedata = {};
 state.action = function (key, callback) {
-    actionsCallback[key] = callback;
+    state.callback[key] = callback;
 };
 
 state.get = function (key) {
     return typeOf(key, 'string')
-        ? sourceData[key] || source[key]
-        : key
+        ? state.sourcedata[key] || state.source[key]
+        : key === undefined
             ? null
-            : sourceData ;
+            : state.sourcedata ;
 };
 
 state.set = function (key, payload) {
-    state.push({[key]: payload});
+    state.setCase({[key]: payload});
 };
 
-state.push = function (payload = {}) {
+state.setCase = function (payload = {}) {
     Object.keys(payload).forEach((key) => {
-        source[key] = sourceData[key] = payload[key];
+        state.source[key] = state.sourcedata[key] = payload[key];
     });
 };
 
 function createSource (payload = {}) {
-    sourceData = payload;
+    state.sourcedata = payload;
     return new Proxy(payload, {
         get: (obj, prop) => {
             return prop in obj ? obj[prop] : null;
         },
         set:(obj, prop, value) => {
-            if (actionsCallback[prop]) {
-                actionsCallback[prop].call({}, state.source, value)
+            if (state.callback[prop]) {
+                state.callback[prop].call({}, state.source, value)
             }
             return true;
         }
