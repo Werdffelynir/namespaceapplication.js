@@ -1,8 +1,5 @@
 
-const {domLoaded} = Util;
-
-
-domLoaded(() => {
+Util.domLoaded(() => {
     const app = new NamespaceApplication({
         id: '#app',
         message: {error: ''},

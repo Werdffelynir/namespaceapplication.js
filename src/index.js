@@ -1,9 +1,9 @@
-import Util from "./Util";
 import NamespaceApplication from "./NamespaceApplication";
-import Cookie from "./cookie/index";
+import Util from "./util";
+import Cookie from "./cookie";
+import Storage from "./storage";
 import Datetime from "./datetime";
 import EventManager from "./event-manager";
-import Storage from "./storage";
 import Timer from "./timer";
 import Emmet from "./emmet";
 import httpRequest from "./http-request";
@@ -20,5 +20,3 @@ window.Timer = Timer;
 window.Emmet = Emmet;
 window.httpRequest = httpRequest;
 window.Dom = Dom;
-
-export default NamespaceApplication;

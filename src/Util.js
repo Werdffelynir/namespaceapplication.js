@@ -9,6 +9,7 @@ import node2str from "./static/node2str";
 import query from "./static/query";
 import search from "./static/search";
 import defined from "./static/defined";
+import definedIn from "./static/definedIn";
 import each from "./static/each";
 import empty from "./static/empty";
 import findObject from "./static/findObject";
@@ -39,6 +40,7 @@ const Util = {
     query,
     search,
     defined,
+    definedIn,
     each,
     empty,
     findObject,
