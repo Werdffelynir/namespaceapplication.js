@@ -9,12 +9,11 @@
 </div>
 `;
 
-    ComponentApplication.component({
-        id: 'TaskComponent',
+    NamespaceApplication.component({
+        id: 'FormComponent',
         template: template,
         init: function (app) {
-            console.log('TaskComponent::init');
-            this.app = app;
+            console.log('FormComponent::init');
         },
         render: function () {}
     });

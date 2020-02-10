@@ -139,12 +139,6 @@ Cookie.encode = encode;
 Cookie.decode = decode;
 Cookie.dataJson = true;
 
-// Cookie('a', 'AAA');
-// Cookie('b', 'BBB');
-// Cookie('c', 'CCC');
-// Cookie('n', 120);
-// Cookie.decode();
-
 export {
     set,
     get,
@@ -152,7 +146,6 @@ export {
     remove,
     encode,
     decode,
-    length,
 };
 
 export default Cookie;

@@ -1,5 +1,5 @@
 (() => {
-    ComponentApplication.component({
+    NamespaceApplication.component({
         id: 'ButtonComponent',
         init: function (app) {
             console.log('ButtonComponent::init');

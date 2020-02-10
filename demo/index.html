@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+    <link rel="stylesheet" href="/demo/css/grid.css">
+    <link rel="stylesheet" href="/demo/css/index.css">
+    <script src="/dist/na.bundle.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+<div class="table height-100">
+    <div id="menu" class="width-15 valign-top"></div>
+    <div id="app" class="valign-top"></div>
+</div>
+<script>
+    let srcs = [];
+    const menuElement = Dom('#menu');
+
+    httpRequest({url: '/demo/menu.json'}, function (status, responseText) {
+        if (status === 200) {
+            const menuItems = JSON.parse(responseText);
+            Object.keys(menuItems).forEach((key) => {
+                if (key !== '__')
+                    menuElement.append('<span class="menu-item" data-key="'+ (menuItems[key]) +'">'+key+'</span>');
+            });
+
+            menuElement.on('click', (eve) => {
+                const src = Dom(eve.target).attr('data-key');
+                if (src)
+                    appLoader(src)
+            });
+        }
+    });
+
+    function appLoader(src) {
+        if (srcs) {
+            srcs.forEach((src) => src.parentNode.removeChild(src));
+        }
+
+        const app = new NamespaceApplication({});
+        app.dependency({
+            js: [
+                '/demo' + src,
+            ],
+            complete: (list) => {
+                srcs = list.elements;
+            }
+        })
+    }
+
+</script>
+</body>
+</html>

@@ -25,6 +25,7 @@ import redirect from "./static/redirect";
 import typeOf from "./static/typeOf";
 import typeOfStrict from "./static/typeOfStrict";
 import uri from "./static/uri";
+import copy from "./static/copy";
 
 const Util = {
     attr,
@@ -54,6 +55,7 @@ const Util = {
     typeOf,
     typeOfStrict,
     uri,
+    copy,
 };
 
 export default Util;

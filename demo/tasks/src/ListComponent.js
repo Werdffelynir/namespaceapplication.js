@@ -21,7 +21,7 @@
 </div>
 `;
 
-    ComponentApplication.component({
+    NamespaceApplication.component({
         id: 'ListComponent',
         template: template,
         init: function (app) {

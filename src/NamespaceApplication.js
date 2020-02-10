@@ -3,6 +3,7 @@ import extension from "./core/extension";
 import dependency from "./core/dependency";
 import route from "./core/route";
 import state from "./core/state";
+import defined from "./static/defined";
 
 class NamespaceApplication
 {
@@ -10,13 +11,16 @@ class NamespaceApplication
         if (NamespaceApplication.instance)
             return NamespaceApplication.instance;
 
-        this.id = undefined;
-        this.url = undefined;
-        this.debug = undefined;
-
+        this.config = (key) => this.configuration[key];
+        this.configuration = {
+            id: undefined,
+            url: undefined,
+            mode: undefined,
+            debug: undefined,
+        };
         Object.keys(config).forEach((key) => {
-            if (this[key] === undefined)
-                this[key] = config[key];
+            if (this.configuration[key] === undefined)
+                this.configuration[key] = config[key];
         });
 
         this.component = component;

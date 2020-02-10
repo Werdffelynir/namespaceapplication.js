@@ -22,7 +22,7 @@
 </div>
 `;
 
-    ComponentApplication.component({
+    NamespaceApplication.component({
         id: 'MainComponent',
         template: template,
         init: function (app) {
@@ -33,8 +33,8 @@
         },
         render: function () {
 
-            const header = ComponentApplication.component('HeaderComponent').create();
-            const content = ComponentApplication.component('ListComponent').create();
+            const header = NamespaceApplication.component('HeaderComponent').create();
+            const content = NamespaceApplication.component('ListComponent').create();
 
             return Util.format(this.template, {header, content});
         },

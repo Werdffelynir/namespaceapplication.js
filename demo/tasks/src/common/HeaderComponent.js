@@ -1,5 +1,5 @@
 (() => {
-    ComponentApplication.component({
+    NamespaceApplication.component({
         id: 'HeaderComponent',
         menu: {
             '': '',

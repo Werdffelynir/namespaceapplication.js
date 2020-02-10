@@ -1,8 +1,7 @@
-
 const Datetime = {};
-Datetime.msInDay = 864e5;
-Datetime.msInHour = 36e5;
-Datetime.msInMinute = 6e4;
+Datetime.MS_IN_DAY = 864e5;
+Datetime.MS_IN_HOUR = 36e5;
+Datetime.MS_IN_MIN = 6e4;
 
 /**
  * Return timestamp
@@ -106,13 +105,16 @@ Datetime.strToDate = function (date, format, utc) {
     return new Date(set[0], set[1], set[2], set[3], set[4], set[5]);
 };
 
+export default Datetime;
+
+/*
 export default {
-    msInDay: Datetime.msInDay,
-    msInHour: Datetime.msInHour,
-    msInMinute: Datetime.msInMinute,
+    MS_IN_DAY: Datetime.MS_IN_DAY,
+    MS_IN_HOUR: Datetime.MS_IN_HOUR,
+    MS_IN_MIN: Datetime.MS_IN_MIN,
     time: Datetime.time,
     addDays: Datetime.addDays,
     betweenDates: Datetime.betweenDates,
     strToDate: Datetime.strToDate,
-    dateToStr: Datetime.strToDate,
 };
+*/
