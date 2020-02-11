@@ -1,7 +1,6 @@
 
-
 const defined = function (value) {
-    return value !== undefined
+    return value !== undefined;
 };
 
 export default defined;

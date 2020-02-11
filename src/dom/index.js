@@ -17,8 +17,8 @@ import defined from "../static/defined";
 
 function Dom (selector) {
     const _ = {
-        selector: selector,
-        selected: queryAll(selector),
+        selector: typeOf(selector, 'string') ? selector : null,
+        selected: isNode(selector) ? [selector] : queryAll(selector),
     };
 
     const _set_real_display_style = function (src) {

@@ -18,6 +18,7 @@
 <script>
     let srcs = [];
     const menuElement = Dom('#menu');
+    const appElement = Dom('#app');
 
     httpRequest({url: '/demo/menu.json'}, function (status, responseText) {
         if (status === 200) {
@@ -38,6 +39,7 @@
     function appLoader(src) {
         if (srcs) {
             srcs.forEach((src) => src.parentNode.removeChild(src));
+            appElement.inject('');
         }
 
         const app = new NamespaceApplication({});
