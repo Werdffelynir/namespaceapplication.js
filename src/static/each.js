@@ -3,11 +3,17 @@ import query from './query';
 
 
 const each = function (list, callback, tmp) {
-    let i = 0;
-    if (list instanceof Array)
-        for (i = 0; i < list.length; i++) callback.call({}, list[i], i, tmp);
-    else
-        for (i in list) callback.call({}, list[i], i, tmp);
+    if (list instanceof Array) {
+        list.forEach((item, i) => {
+            callback.call({}, item, i, tmp);
+        });
+    } else if (Util.isNode(list)) {
+        each([].slice.call(list.childNodes), callback, tmp);
+    } else {
+        Object.keys(list).forEach((item, i) => {
+            callback.call({}, item, i, tmp);
+        });
+    }
 };
 
 each.parent = function (selector, filter, loops = 10) {
