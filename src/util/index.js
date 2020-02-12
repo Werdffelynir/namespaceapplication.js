@@ -8,6 +8,7 @@ import str2node from "../static/str2node";
 import node2str from "../static/node2str";
 import query from "../static/query";
 import search from "../static/search";
+import httpRequest from "../static/httpRequest";
 import defined from "../static/defined";
 import definedIn from "../static/definedIn";
 import each from "../static/each";
@@ -39,6 +40,7 @@ const Util = {
     node2str,
     query,
     search,
+    httpRequest,
     defined,
     definedIn,
     each,

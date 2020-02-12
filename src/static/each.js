@@ -7,7 +7,7 @@ const each = function (list, callback, tmp) {
         list.forEach((item, i) => {
             callback.call({}, item, i, tmp);
         });
-    } else if (Util.isNode(list)) {
+    } else if (isNode(list)) {
         each([].slice.call(list.childNodes), callback, tmp);
     } else {
         Object.keys(list).forEach((item, i) => {
