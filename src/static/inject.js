@@ -4,8 +4,16 @@ import typeOf from './typeOf';
 import query from './query';
 
 
-const inject = function (selector, data, append, to) {
-    if (typeof selector === 'string')
+const inject = function (selector, data, append, to)
+{
+    if (typeOf(selector, 'array')) {
+        selector.forEach((elem) => {
+            inject(elem, data, append, to);
+        });
+        return;
+    }
+
+    if (typeOf(selector, 'string'))
         selector = query(selector, to);
 
     if (!append)

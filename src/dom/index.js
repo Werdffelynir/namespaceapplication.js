@@ -14,9 +14,10 @@ import createFragment from "../static/createFragment";
 import createElement from "../static/createElement";
 import on from "../static/on";
 import defined from "../static/defined";
+import position from "../static/position";
 
 function Dom (selector) {
-    const _ = {
+    const $ = {
         selector: typeOf(selector, 'string') ? selector : null,
         selected: isNode(selector) ? [selector] : queryAll(selector),
     };
@@ -30,26 +31,34 @@ function Dom (selector) {
         }
     };
 
-    _.one = () => _.selected && _.selected.length ? _.selected[0] : false;
-    _.all = () => _.selected;
-    _.attr = (name, value) => defined(value) ? attr(_.one(), name, value) : attr(_.one(), name);
-    _.inject = (data, append, to) => inject(_.one(), data, append, to);
-    _.append = (data) => inject(_.one(), data, true);
-    _.search = (attr, from) => search(_.one(), attr, from);
-    _.parent = () => _.one().parentNode;
-    _.remove = () => _.one().parentNode.removeChild(_.one());
-    _.show = () => {
-        const src = _.one();
+    $.one = () => $.selected && $.selected.length ? $.selected[0] : false;
+    $.all = () => $.selected;
+    $.attr = (name, value) => defined(value) ? attr($.one(), name, value) : attr($.one(), name);
+    $.inject = (data, append, to) => inject($.one(), data, append, to);
+    $.append = (data) => inject($.one(), data, true);
+    $.search = (attr, from) => search($.one(), attr, from);
+    $.parent = () => $.one().parentNode;
+    $.children = () => {
+        $.one()
+    };
+    $.position = () => position($.one());
+    $.x = () => position($.one()).x;
+    $.y = () => position($.one()).y;
+    $.width = () => position($.one()).width;
+    $.height = () => position($.one()).height;
+    $.remove = () => $.one().parentNode.removeChild($.one());
+    $.show = () => {
+        const src = $.one();
         _set_real_display_style(src);
         css(src, {display: src && src['real-display-style'] ? src['real-display-style'] : 'block'});
     };
-    _.hide = () => {
-        const src = _.one();
+    $.hide = () => {
+        const src = $.one();
         _set_real_display_style(src);
         css(src, {display: 'none'});
     };
-    _.toggle = () => {
-        const src = _.one();
+    $.toggle = () => {
+        const src = $.one();
         if (typeOf(src, 'string')) {
             queryAll(src).map(Dom.toggle);
         } else if (isNode(src)) {
@@ -57,9 +66,9 @@ function Dom (selector) {
             else Dom.hide(src);
         }
     };
-    _.on = (eventName, callback, bubble) => on(_.one(), eventName, callback, bubble);
+    $.on = (eventName, callback, bubble) => on($.one(), eventName, callback, bubble);
 
-    return _;
+    return $;
 }
 
 Dom.attr = attr;

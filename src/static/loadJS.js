@@ -1,6 +1,7 @@
 import typeOf from "./typeOf";
 import getDocument from "./getDocument";
 
+const documentElement = getDocument();
 const loadJS = function (src, onload, onerror) {
     if (!src) return null;
     if (typeOf(src, 'array')) {
@@ -8,9 +9,8 @@ const loadJS = function (src, onload, onerror) {
             loadJS(src[i], onload, onerror);
         }
     } else {
-        const doc = getDocument();
-        const script = doc.createElement('script');
-        const id = "src-" + Math.random().toString(32).slice(2);
+        const script = documentElement.createElement('script');
+        const id = 'resource-' + Math.random().toString(32).slice(2);
 
         script.src = (src.substr(-3) === '.js') ? src : src + '.js';
         script.type = 'application/javascript';
@@ -18,7 +18,7 @@ const loadJS = function (src, onload, onerror) {
         script.onload = onload;
         script.onerror = onerror;
 
-        doc.head.appendChild(script);
+        documentElement.head.appendChild(script);
         return script
     }
 };

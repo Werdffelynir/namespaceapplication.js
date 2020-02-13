@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <title>Demo</title>
 <!--    <script>location.href = '/demo'</script>-->
-    <script src="http://web-services.loc/collector.js" data-param=""></script>
+<!--    <script src="http://web-services.loc/collector.js" data-param=""></script>-->
+    <script src="dist/na.bundle.js" data-param=""></script>
 </head>
 <body>
-<div id="app"></div>
+<div id="app">{str}</div>
 <script>
-    // console.log(NamespaceApplication)
+    const {Util} = NamespaceApplication;
+    // console.log(Util.number2string(Util.randomNumber(20)));
+    console.log(Util.number2string(Util.randomNumber(22)));
 </script>
 </body>
 </html>
