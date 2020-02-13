@@ -1,7 +1,7 @@
 import typeOf from "./typeOf";
 
 
-const empty = function (src) {
+const isEmpty = function (src) {
     if (typeOf(src, 'object') || typeOf(src, 'array')) {
         for (let key in src)
             if (src.hasOwnProperty(key))
@@ -15,4 +15,4 @@ const empty = function (src) {
     }
 };
 
-export default empty;
+export default isEmpty;
