@@ -4,27 +4,20 @@ import getDocument from './getDocument';
 
 const doc = getDocument();
 
-const queryAll = function (selector, fromCallback, thisInstance) {
-    let type = typeOf(fromCallback),
-        from = doc || document,
-        elements = [],
-        callback = null;
+const queryAll = function (selector, from, callback, thisInstance) {
+    let elements = [];
+    from = from || doc;
 
     if (isNode(selector))
         return [selector];
 
-    if (type === "function")
-        callback = fromCallback;
-    else if (type === "string")
-        from = doc.querySelector(fromCallback);
-    else if (type === "object" && isNode(fromCallback))
-        from = fromCallback;
-
+    if (typeOf(from, 'string'))
+        from = doc.querySelector(from);
     if (from)
         elements = [].slice.call(from.querySelectorAll(selector));
 
     if (callback)
-        callback.call(thisInstance || {}, elements);
+        elements.forEach((element) => {callback.call(thisInstance || {}, element)});
 
     return elements;
 };

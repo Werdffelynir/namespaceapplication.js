@@ -51,12 +51,8 @@
 </head>
 <body>
 <div id="app">
-    <div class="ava">
-        <h3>Lorem ipsum dolor.</h3>
-        <p>Lorem ipsum dolor sit.</p>
-    </div>
-<!--    <div data-component="PopupButtonComponent">Say Hello</div>-->
-<!--    <div data-component="PopupFillComponent"></div>-->
+    <div data-component="PopupButtonComponent">Say Hello</div>
+    <div data-component="PopupFillComponent"></div>
     <div data-component="PopupWindowComponent" title="hello" age="43"></div>
 </div>
 <script>
@@ -81,9 +77,7 @@
         </div>
     </div>
 </div>`,
-        init () {
-            // this.template = Util.query('.ava');
-        },
+        init () {},
         complete (app) {
             app.state.action('header', (source, value) => {
                 Dom(this.node['header']).inject(Dom.create('h1', {}, value ));

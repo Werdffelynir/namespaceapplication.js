@@ -23,6 +23,13 @@ class NamespaceApplication
                 this.configuration[key] = config[key];
         });
 
+        if (this.configuration.id) {
+            Object.defineProperty(this, "root", {
+                value: document.querySelector(this.configuration.id),
+                writable: false
+            });
+        }
+
         this.component = component;
         this.component.register(this);
 
