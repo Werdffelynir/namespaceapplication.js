@@ -27,13 +27,22 @@
         if (status === 200) {
             const menuItems = JSON.parse(responseText);
             Object.keys(menuItems).forEach((key) => {
-                if (key !== '__')
+                if (['__', 'redirect'].indexOf(key) === -1)
                     menuElement.append('<span class="menu-item" data-key="'+ (menuItems[key]) +'">'+key+'</span>');
+
+                if (key === 'redirect') {
+                    Object.keys(menuItems[key]).forEach((keyRedirect) => {
+                        menuElement.append('<span class="menu-item" data-key="redirect.'+ (menuItems[key][keyRedirect]) +'">'+keyRedirect+'</span>');
+                    });
+
+                }
             });
 
             menuElement.on('click', (eve) => {
                 const src = Dom(eve.target).attr('data-key');
-                if (src)
+                if (src.indexOf('redirect.') === 0)
+                    location.href = '/demo/' + src.substring(9);
+                else
                     appLoader(src)
             });
         }

@@ -3,5 +3,8 @@
   "Component Styles": "/component/StylesComponent.js",
   "Components Auth Form": "/component/AuthformComponent.js",
   "Tasks": "/tasks/index.js",
+  "redirect": {
+    "Component Integration": "component_integration.html"
+  },
   "__": "/__/__.js"
 }
