@@ -4,7 +4,6 @@ import search from "../static/search";
 import queryAll from "../static/queryAll";
 import inject from "../static/inject";
 import {EVENTS_NAMES_BASIC} from "../event-manager/eventsNames";
-import typeOf from "../static/typeOf";
 import isNode from "../static/isNode";
 
 
@@ -22,33 +21,24 @@ const component = function (config) {
 
         if (typeof comp.template === 'string'){
             comp.template = str2node(comp.template).firstElementChild;
+        }
+
+        if (isNode(comp.template)) {
 
             if (comp.template.querySelector('[data-node]'))
                 comp.node = search('[data-node]', 'data-node', comp.template);
 
             if (comp.styles)
-                Object.keys(comp.styles).forEach((selector) => {
-                    if (selector === 'template' && isNode(comp.template)) {
-                        console.log(selector)
-                        Object.keys(comp.styles[selector]).forEach((key) => {
-                            comp.template.style[key] = comp.styles[selector][key];
-                        });
-                    } else
-                        queryAll(selector, comp.template, function (node) {
-                            Object.keys(comp.styles[selector]).forEach((key) => {
-                                node.style[key] = comp.styles[selector][key];
-                            });
-                        });
-                });
+                setStyles(comp);
 
-            attributesEventsHandler(comp, 'on', Object.keys(EVENTS_NAMES_BASIC))
+            attributesEventsHandler(comp, 'on', Object.keys(EVENTS_NAMES_BASIC));
         }
 
         if (typeof comp.complete === 'function' && !comp.completed) {
             if (this instanceof NamespaceApplication) {
                 comp.completed = true;
-                injectComponent (comp, this);
                 comp.complete.call(comp, this);
+                injectComponent (comp, this);
             } else {
                 throw new Error('"Late Call": Component ['+comp.id+'] can t call completed() and injects')
             }
@@ -64,8 +54,8 @@ component.register = function (instance)
 
             if (comp.complete && !comp.completed) {
                 comp.completed = true;
-                injectComponent (comp, instance);
                 comp.complete.call(comp, instance);
+                injectComponent (comp, instance);
             }
         });
     }
@@ -131,6 +121,24 @@ function injectComponent (comp, instance) {
 
             inject(node, comp.template)
         });
+
+    return comp;
+}
+
+function setStyles(comp, instance) {
+
+    Object.keys(comp.styles).forEach((selector) => {
+        if (selector === 'template' && isNode(comp.template)) {
+            Object.keys(comp.styles[selector]).forEach((key) => {
+                comp.template.style[key] = comp.styles[selector][key];
+            });
+        } else
+            queryAll(selector, comp.template, function (node) {
+                Object.keys(comp.styles[selector]).forEach((key) => {
+                    node.style[key] = comp.styles[selector][key];
+                });
+            });
+    });
 
     return comp;
 }
