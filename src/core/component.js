@@ -3,7 +3,7 @@ import str2node from "../static/str2node";
 import search from "../static/search";
 import queryAll from "../static/queryAll";
 import inject from "../static/inject";
-import {EVENTS_NAMES_BASIC} from "../event-manager/eventsNames";
+import { EVENTS_NAMES_BASIC } from "../event-manager/eventsNames";
 import isNode from "../static/isNode";
 
 
