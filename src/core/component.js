@@ -2,6 +2,7 @@ import merge from "../static/merge";
 import str2node from "../static/str2node";
 import search from "../static/search";
 import queryAll from "../static/queryAll";
+import query from "../static/query";
 import inject from "../static/inject";
 import { EVENTS_NAMES_BASIC } from "../event-manager/eventsNames";
 import isNode from "../static/isNode";
@@ -23,6 +24,13 @@ const component = function (config) {
             comp.template = str2node(comp.template).firstElementChild;
         }
 
+        if (!comp.template && app.root ){
+            const node = query('[data-component="'+ comp.id +'"]', app.root);
+
+            if (node)
+                comp.template = node;
+        }
+
         if (isNode(comp.template)) {
 
             if (comp.template.querySelector('[data-node]'))
@@ -34,15 +42,18 @@ const component = function (config) {
             attributesEventsHandler(comp, 'on', Object.keys(EVENTS_NAMES_BASIC));
         }
 
-        if (typeof comp.complete === 'function' && !comp.completed) {
-            if (this instanceof NamespaceApplication) {
-                comp.completed = true;
-                comp.complete.call(comp, this);
-                injectComponent (comp, this);
-            } else {
-                throw new Error('"Late Call": Component ['+comp.id+'] can t call completed() and injects')
-            }
+        if (this instanceof NamespaceApplication) {
+
+            injectComponent (comp, this);
+        } else {
+            throw new Error('"Late Call": Component ['+comp.id+'] can t call completed() and injects')
         }
+
+        if (typeof comp.complete === 'function' && !comp.completed && this instanceof NamespaceApplication) {
+            comp.completed = true;
+            comp.complete.call(comp, this);
+        }
+
     }
 };
 
@@ -68,7 +79,7 @@ component.create = function (config) {
         id: null,
         props: null,
         styles: null,
-        template: null,
+        template: false,
         override: false,
         init: () => {},
         complete: () => {},
@@ -94,10 +105,10 @@ function attributesEventsHandler (comp, prefix, eventsNames) {
         const attr = prefix + '-' + eventName;
         if (comp.template.querySelector('['+attr+']')) {
             Array.from(comp.template.querySelectorAll('['+attr+']')).forEach((elem) => {
-                addEvent(elem, attr, eventName)
+                addEvent(elem, attr, eventName);
             })
         } else if (comp.template.hasAttribute(attr)) {
-            addEvent(comp.template, attr, eventName)
+            addEvent(comp.template, attr, eventName);
         }
     })
 }
@@ -116,10 +127,10 @@ function injectComponent (comp, instance) {
                         });
                         node.removeAttribute(prop);
                     }
-                })
+                });
             }
-
-            inject(node, comp.template)
+            if (node !== comp.template)
+                inject(node, comp.template);
         });
 
     return comp;
