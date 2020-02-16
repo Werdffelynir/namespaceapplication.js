@@ -1,9 +1,7 @@
 {
-  "Component create": "/component/create.js",
-  "Components before": "/component/before.js",
-  "Components after": "/component/after.js",
-  "Dom constructor": "/dom/constructor.js",
-  "Dom target": "/dom/target.js",
+  "Component Base Example": "/component/ExampleComponent.js",
+  "Component Styles": "/component/StylesComponent.js",
+  "Components Auth Form": "/component/AuthformComponent.js",
   "Tasks": "/tasks/index.js",
   "__": "/__/__.js"
 }

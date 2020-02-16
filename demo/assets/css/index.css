@@ -9,12 +9,16 @@ html, body, #app {
 
 #menu {
     background: #cccccc;
+    border-right: 2px solid #3a3a3a;
 }
 .menu-item {
     display: block;
     padding: 3px 10px;
     cursor: pointer;
+    font-size: 12px;
+    background-color: #cccccc;
+    border-bottom: 2px solid #3a3a3a;
 }
 .menu-item:hover {
-    background: #cccccc;
+    background-color: #ffffff;
 }

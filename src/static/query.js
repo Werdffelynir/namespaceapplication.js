@@ -3,12 +3,13 @@ import queryAll from './queryAll';
 /**
  *
  * @param selector
- * @param fromCallback
+ * @param from
+ * @param callback
  * @param thisInstance
  * @returns {Node|boolean}
  */
-const query = function (selector, fromCallback, thisInstance) {
-    const elements = queryAll(selector, fromCallback, thisInstance);
+const query = function (selector, from, callback, thisInstance) {
+    const elements = queryAll(selector, from, callback, thisInstance);
     return elements && elements[0] ? elements[0] : false;
 };
 

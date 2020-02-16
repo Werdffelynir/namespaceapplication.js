@@ -3,24 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Demo</title>
-    <link rel="stylesheet" href="/demo/css/grid.css">
-    <link rel="stylesheet" href="/demo/css/index.css">
+    <link rel="stylesheet" href="/demo/assets/css/grid.css">
+    <link rel="stylesheet" href="/demo/assets/css/index.css">
     <script src="/dist/na.bundle.js"></script>
-    <style>
-
-    </style>
 </head>
 <body>
 <div class="table height-100">
-    <div id="menu" class="width-15 valign-top"></div>
+    <div id="menu" class="width-20 valign-top"></div>
     <div id="app" class="valign-top"></div>
 </div>
 <script>
+    const {
+        Util,
+        Dom,
+    } = NamespaceApplication;
+
+    let app;
     let srcs = [];
     const menuElement = Dom('#menu');
     const appElement = Dom('#app');
 
-    httpRequest({url: '/demo/menu.json'}, function (status, responseText) {
+    Util.httpRequest({url: '/demo/menu.json'}, function (status, responseText) {
         if (status === 200) {
             const menuItems = JSON.parse(responseText);
             Object.keys(menuItems).forEach((key) => {

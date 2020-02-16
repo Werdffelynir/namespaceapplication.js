@@ -15,6 +15,7 @@ import createElement from "../static/createElement";
 import on from "../static/on";
 import defined from "../static/defined";
 import position from "../static/position";
+import merge from "../static/merge";
 
 function Dom (selector) {
     const $ = {
@@ -67,7 +68,10 @@ function Dom (selector) {
         }
     };
     $.on = (eventName, callback, bubble) => on($.one(), eventName, callback, bubble);
-
+    $.coords = () => {
+        const coords = $.one().getBoundingClientRect();
+        return merge({top: coords.top + pageYOffset, left: coords.left + pageXOffset}, coords);
+    };
     return $;
 }
 
@@ -83,5 +87,7 @@ Dom.create = createElement;
 Dom.fragment = createFragment;
 Dom.node2str = node2str;
 Dom.str2node = str2node;
+Dom.position = position;
+
 
 export default Dom;
