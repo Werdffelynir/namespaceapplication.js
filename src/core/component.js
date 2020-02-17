@@ -20,8 +20,8 @@ const component = function (config) {
             comp.init();
         }
 
-        if (typeof comp.template === 'string'){
-            comp.template = str2node(comp.template).firstElementChild;
+        if (typeof comp.template === 'string') {
+            comp.template = str2node(comp.template);
         }
 
         if (!comp.template && app.root ){

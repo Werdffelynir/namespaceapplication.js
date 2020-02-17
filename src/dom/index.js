@@ -43,6 +43,8 @@ function Dom (selector) {
         $.one()
     };
     $.position = () => position($.one());
+    $.query = (selector) => $.one().querySelector(selector);
+    $.queryAll = (selector) => $.one().querySelectorAll(selector);
     $.x = () => position($.one()).x;
     $.y = () => position($.one()).y;
     $.width = () => position($.one()).width;

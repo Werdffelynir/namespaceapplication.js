@@ -5,8 +5,10 @@ import css from "../static/css";
 import domLoaded from "../static/domLoaded";
 import inject from "../static/inject";
 import str2node from "../static/str2node";
+import str2fragment from "../static/str2fragment";
 import node2str from "../static/node2str";
 import query from "../static/query";
+import queryAll from "../static/queryAll";
 import search from "../static/search";
 import httpRequest from "../static/httpRequest";
 import defined from "../static/defined";
@@ -41,8 +43,10 @@ const Util = {
     domLoaded,
     inject,
     str2node,
+    str2fragment,
     node2str,
     query,
+    queryAll,
     search,
     httpRequest,
     defined,
