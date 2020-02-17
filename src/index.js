@@ -8,6 +8,7 @@ import Timer from "./timer";
 import Emmet from "./emmet";
 import httpRequest from "./http-request";
 import Dom from "./dom";
+import Str from "./str";
 
 
 window.NamespaceApplication = NamespaceApplication;
@@ -20,3 +21,4 @@ window.NamespaceApplication.Timer = Timer;
 window.NamespaceApplication.Emmet = Emmet;
 window.NamespaceApplication.httpRequest = httpRequest;
 window.NamespaceApplication.Dom = Dom;
+window.NamespaceApplication.Str = Str;

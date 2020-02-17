@@ -18,6 +18,7 @@ const copy = function (src, instance)
         Object.keys(src).forEach((key) => {
             let value = src[key];
             result[key] = copy(value, typeof value === "function" ? src : {});
+            // result[key] = copy(value, typeof value === "function" ? src : instance || src);
         });
         return result;
     }
