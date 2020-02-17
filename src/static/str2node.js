@@ -1,14 +1,20 @@
-
+import str2fragment from "./str2fragment";
 
 const str2node = function (string) {
-    let i, fragment = document.createDocumentFragment(),
-        container = document.createElement("div");
-    container.innerHTML = string;
+    let result;
+    let fragment = str2fragment(string);
 
-    while (i = container.firstChild)
-        fragment.appendChild(i);
-
-    return fragment.childNodes.length === 1 ? fragment.firstChild : fragment;
+    switch (fragment.childElementCount) {
+        case 0: break;
+        case 1:
+            result = fragment.firstElementChild;
+            break;
+        default:
+            let container = document.createElement("span");
+            container.appendChild(fragment);
+            result = container;
+    }
+    return result;
 };
 
 export default str2node;

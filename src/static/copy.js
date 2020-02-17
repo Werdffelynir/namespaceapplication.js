@@ -1,27 +1,28 @@
 import typeOf from "./typeOf";
 import isNode from "./isNode";
-import defined from "./defined";
 
 
-const copy = function (src, addProperties) {
-    const type = typeOf(src);
+const copy = function (src, instance)
+{
+    if (isNode(src))
+        return src.cloneNode(true);
 
-    if (type === 'object' && isNode(src)) {
-        return src.cloneNode(!!addProperties);
+    if (Array.isArray(src))
+        return src.slice();
+
+    if (typeof src === 'function')
+        return src.bind(instance || {});
+
+    if (typeOf(src, 'object')) {
+        let result = {};
+        Object.keys(src).forEach((key) => {
+            let value = src[key];
+            result[key] = copy(value, typeof value === "function" ? src : {});
+        });
+        return result;
     }
-    else if (type === 'function') {
-        return src.bind({});
-    }
-    else if (type === 'array' || type === 'object') {
-        const copy = JSON.parse(JSON.stringify(src));
-        if (typeOf(addProperties, 'object') || typeOf(addProperties, 'array'))
-            Object.keys(addProperties).forEach((key) => {
-                copy[key] = addProperties[key];
-            });
-        return copy;
-    }
-    else
-        return defined(addProperties) ? src + addProperties : src;
+
+    return src;
 };
 
 export default copy;

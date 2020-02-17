@@ -1,8 +1,9 @@
 import isNode from './isNode';
 import query from './query';
+import typeOf from "./typeOf";
 
 
-const each = function (list, callback, tmp) {
+/*const each = function (list, callback, tmp) {
     if (list instanceof Array) {
         list.forEach((item, i) => {
             callback.call({}, item, i, tmp);
@@ -13,6 +14,28 @@ const each = function (list, callback, tmp) {
         Object.keys(list).forEach((item, i) => {
             callback.call({}, item, i, tmp);
         });
+    }
+};*/
+
+const each = function (list, callback, instance) {
+    let type = typeOf(list);
+
+    switch (type) {
+        case 'array':
+            list.forEach((i, v, a) => callback.call(instance, i, v, a));
+            break;
+        case 'object':
+            if (isNode(list)) {
+                if (list instanceof NodeList)
+                    each(Array.from(list), callback, instance)
+                else
+                    each([list], callback, instance)
+            } else
+                Object.keys(list).forEach((key) => callback.call(instance, list[key], key, list));
+            break;
+        case 'string':
+            each(list.split(""), callback, instance);
+            break;
     }
 };
 

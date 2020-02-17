@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <script src="dist/na.bundle.js" data-param=""></script>
+    <link rel="stylesheet" href="/demo/assets/css/grid.build.css">
+    <style type="text/css" rel="stylesheet">
+        html, body {}
+        #app {
+            font-size: 12px;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <h1>Text list</h1>
+    <ul>
+        <li>text item</li>
+        <li>text item</li>
+        <li>text item</li>
+    </ul>
+    <div data-component="MyComponent"></div>
+</div>
+<script>
+
+    const {Util, Dom} = NamespaceApplication;
+    const app = new NamespaceApplication({
+        id: '#app'
+    });
+
+    app.component({
+        id: 'MyComponent',
+        template: `
+        <div>
+            <span data-node="one">One</span>
+            <span data-node="two">Two text</span>
+        </div>
+        `,
+        init(){},
+        complete(app){},
+        methods: {},
+    });
+
+</script>
+</body>
+</html>
