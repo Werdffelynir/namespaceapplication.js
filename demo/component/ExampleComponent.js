@@ -18,7 +18,7 @@ app.component({
     },
     complete (app) {
         console.log('Component complete');
-        Dom('#app').inject(this.element);
+        Dom('#app').inject(this.template);
     },
     data: {
         iterator: 0,

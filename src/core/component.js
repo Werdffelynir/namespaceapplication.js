@@ -6,10 +6,14 @@ import query from "../static/query";
 import inject from "../static/inject";
 import { EVENTS_NAMES_BASIC } from "../event-manager/eventsNames";
 import isNode from "../static/isNode";
+import copy from "../static/copy";
 
 
 const component = function (config) {
     if (typeof config === 'string') {
+
+
+
         return component.list[config];
     } else {
         const comp = component.create(config);
@@ -24,13 +28,6 @@ const component = function (config) {
             comp.template = str2node(comp.template);
         }
 
-        if (!comp.template && app.root ){
-            const node = query('[data-component="'+ comp.id +'"]', app.root);
-
-            if (node)
-                comp.template = node;
-        }
-
         if (isNode(comp.template)) {
 
             if (comp.template.querySelector('[data-node]'))
@@ -43,10 +40,15 @@ const component = function (config) {
         }
 
         if (this instanceof NamespaceApplication) {
-
             injectComponent (comp, this);
+            if (!comp.template && this.root){
+                const node = query('[data-component="'+ comp.id +'"]', this.root);
+                if (node)
+                    comp.template = node;
+            }
         } else {
-            throw new Error('"Late Call": Component ['+comp.id+'] can t call completed() and injects')
+            if (NamespaceApplication.mode === NamespaceApplication.MODE_DEBUG)
+                throw new Error('"Late Call": Component ['+comp.id+'] can t call completed() and injects')
         }
 
         if (typeof comp.complete === 'function' && !comp.completed && this instanceof NamespaceApplication) {

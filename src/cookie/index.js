@@ -29,9 +29,11 @@ const Cookie = function (name, value) {
 /**
  * Set Cookie key, value
  *  expires - ms, Date, -1, 0
+ *  maxAge - s (year 31536000)
+ *  SameSite=Strict|Lax
  * @param name
  * @param value
- * @param {{}} options   {expires: 0, path: '/', domain: 'site.com', secure: false}
+ * @param {{}} options   {expires: 0, path: '/', domain: 'site.com', secure: false, maxAge: 60*60*24*365, sameSite: '' }
  * @param typeJson bool
  */
 const set = function (name, value, options, typeJson = true)
@@ -56,6 +58,15 @@ const set = function (name, value, options, typeJson = true)
         }
     }
 
+    if (options.maxAge) {
+        options['max-age'] = options.maxAge;
+        delete options.maxAge;
+    }
+    if (options.sameSite) {
+        options['samesite'] = options.sameSite;
+        delete options.sameSite;
+    }
+
     data += encode(options);
     document.cookie = data;
 };
@@ -72,7 +83,6 @@ const get = function (name, typeJson = true) {
     ));
 
     let data = matches ? decodeURIComponent(matches[1]) : undefined;
-
 
     if (Cookie.dataJson) {}
     if (typeJson && data)
@@ -105,8 +115,8 @@ const clear = function () {
 const encode = function (data) {
     let str = '';
     Object.keys(data).forEach((key) => {
-        if (data[key] !== true)
-            str += (str ? ';' : '') + key + '=' + encodeURIComponent(data[key]);
+        if (data[key] !== undefined)
+            str += ';' + key + '=' + encodeURIComponent(data[key]);
     });
     return str;
 };

@@ -11,7 +11,7 @@ class NamespaceApplication
         if (NamespaceApplication.instance)
             return NamespaceApplication.instance;
 
-        this.config = (key) => this.configuration[key];
+        this.config = (key, value) => value === undefined ? this.configuration[key] : this.configuration[key] = value;
         this.configuration = {
             id: undefined,
             url: undefined,
@@ -38,7 +38,7 @@ class NamespaceApplication
 
         this.dependency = dependency;
         this.route = route;
-        this.state = state;
+        // this.state = state;
 
         NamespaceApplication.instance = this;
     }
@@ -46,5 +46,6 @@ class NamespaceApplication
 
 NamespaceApplication.component = component;
 NamespaceApplication.extension = extension;
+NamespaceApplication.MODE_DEBUG = 'debug';
 
 export default NamespaceApplication;

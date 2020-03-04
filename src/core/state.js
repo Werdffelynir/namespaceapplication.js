@@ -7,6 +7,7 @@ const state = function (key, data) {
 
 state.callback = {};
 state.source = createSource();
+state.create = createSource();
 state.sourcedata = {};
 state.action = function (key, callback) {
     state.callback[key] = callback;

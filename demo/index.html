@@ -16,10 +16,15 @@
     const {
         Util,
         Dom,
+        Roxy,
     } = NamespaceApplication;
 
-    let app;
-    let srcs = [];
+    const TEST_SCRIPT = '/demo/tasks/index.js';
+    if (TEST_SCRIPT) {
+        Util.loadJS(TEST_SCRIPT);
+    }
+
+/*    let srcs = [];
     const menuElement = Dom('#menu');
     const appElement = Dom('#app');
 
@@ -54,8 +59,8 @@
             appElement.inject('');
         }
 
-        const app = new NamespaceApplication({});
-        app.dependency({
+        const appLoader = new NamespaceApplication({});
+        appLoader.dependency({
             js: [
                 '/demo' + src,
             ],
@@ -63,7 +68,7 @@
                 srcs = list.elements;
             }
         })
-    }
+    }*/
 
 </script>
 </body>
