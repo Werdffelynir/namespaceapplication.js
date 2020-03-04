@@ -114,7 +114,6 @@
         }
     });
 
-
     app.component({
         id: 'TaskComponent',
         template: `<div></div>`,
@@ -172,7 +171,7 @@
         render (values) {
             Object.keys(values).forEach((key) => {
                 if (this.node[key])
-                    this.node[key].textContent = values[key];
+                    this.node[key].innerHTML = values[key];
             });
             return this.template;
         },
@@ -193,10 +192,13 @@
             comment (e) {
                 const id = this.node["id"].textContent;
 
-                RxList.set('list', (proxy) => {
+                RxList.set((proxy) => {
                     proxy.list.forEach((it, i) => {
-                        if (it.id === id)
-                            it.comment += "\n" + e.target.value;
+                        if (it.id === id) {
+                            it.comment += "<br>----------<br>" + e.target.value;
+                            this.node['comment'].innerHTML = it.comment;
+                            e.target.value = ''
+                        }
                     });
                 });
             },

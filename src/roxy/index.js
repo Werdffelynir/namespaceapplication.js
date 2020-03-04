@@ -22,14 +22,18 @@ const Roxy = function (payload)
     return {
 
         set (key, payload) {
-            if (typeof key === "function") {
-                const result = key.call({}, proxy);
+            let result;
+
+            if (typeof key === "function" && !payload) {
+                result = key.call({}, proxy);
                 if (result)
                     this.fill(result)
+
             } else if (typeof payload === "function") {
-                const result = payload.call({}, proxy[key]);
+                result = payload.call({}, proxy[key]);
                 if (result)
                     proxy[key] = result;
+
             } else
                 proxy[key] = payload;
 
@@ -39,8 +43,8 @@ const Roxy = function (payload)
         action (key, callback) {
             if (typeof key === "function" && !callback) {
                 actions.default = key;
-            }
-            actions[key] = typeof callback === "function" ? callback : null;
+            } else
+                actions[key] = typeof callback === "function" ? callback : null;
 
             return this;
         },
