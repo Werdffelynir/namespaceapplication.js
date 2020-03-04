@@ -43,21 +43,20 @@
     <div data-component="CardComponent" title="hello">Say Hello</div>
 </div>
 <script>
-    const {Util, Dom} = NamespaceApplication;
+    const {Util, Dom, Roxy} = NamespaceApplication;
     const app = new NamespaceApplication({
         id: '#app'
     });
 
-    // State Actions
-    app.state.action('header', (source, value) => {
-        Dom(app.component('CardComponent').node['header'])
-            .inject(Dom.create('h1', {}, value ));
-    });
-    app.state.action('body', (source, value) => {
-        Dom(app.component('CardComponent').node['body'])
-            .inject(Dom.create('p', {}, value ));
+    const rxData = Roxy({
+        title: '',
+        body: '',
     });
 
+    rxData.action((key, values)=>{
+        console.log(key, values)
+        Dom(app.component('CardComponent').node[key]).inject(Dom.create('p', {}, values ));
+    });
 
     // Components
     app.component({
@@ -65,7 +64,7 @@
         styles: {template: {color: 'black'}, '.header' : {color: '#666'},},
         template: `
 <div class="card" data-node="card">
-    <div class="header table pl-1" data-node="header"><h1>{body}</h1></div>
+    <div class="header table pl-1" data-node="title"></div>
     <div class="body table text-center" data-node="body"></div>
     <div class="footer table">
         <div class="text-right pr-1">
@@ -76,15 +75,15 @@
 </div>`,
         init () {},
         complete (app) {
-            app.state.set('header', 'Hello friend');
-            app.state.set('body', 'Do you happy now ?');
+            rxData.set('title', 'Hello friend');
+            rxData.set('body', 'Do you happy now ?');
         },
         methods: {
             ok (e) {
-                app.state.set('body', 'Thank you for that :)');
+                rxData.set('body', 'Thank you for that :)');
             },
             cancel (e) {
-                app.state.set('body', 'It is sed :(');
+                rxData.set('body', 'It is sed :(');
             },
         },
         show (e) { this.template.classList.remove('hide') },
