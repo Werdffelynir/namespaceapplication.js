@@ -9,6 +9,7 @@ import Emmet from "./emmet";
 import httpRequest from "./http-request";
 import Dom from "./dom";
 import Str from "./str";
+import Roxy from "./roxy";
 
 
 window.NamespaceApplication = NamespaceApplication;
@@ -22,3 +23,4 @@ window.NamespaceApplication.Emmet = Emmet;
 window.NamespaceApplication.httpRequest = httpRequest;
 window.NamespaceApplication.Dom = Dom;
 window.NamespaceApplication.Str = Str;
+window.NamespaceApplication.Roxy = Roxy;

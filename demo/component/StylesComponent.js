@@ -28,7 +28,7 @@ app.component({
     },
     complete (app) {
         // console.log(app);
-        Dom('#app').inject(this.element);
+        Dom('#app').inject(this.template);
     },
     methods: {
         hello (e) {

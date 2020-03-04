@@ -10,6 +10,8 @@ import node2str from "../static/node2str";
 import query from "../static/query";
 import queryAll from "../static/queryAll";
 import search from "../static/search";
+import encodeGetQuery from "../static/encodeGetQuery";
+import decodeGetQuery from "../static/decodeGetQuery";
 import httpRequest from "../static/httpRequest";
 import defined from "../static/defined";
 import definedIn from "../static/definedIn";
@@ -48,6 +50,8 @@ const Util = {
     query,
     queryAll,
     search,
+    encodeGetQuery,
+    decodeGetQuery,
     httpRequest,
     defined,
     definedIn,
@@ -77,6 +81,7 @@ const Util = {
     typeOfStrict,
     uri,
     copy,
+    clone: copy,
 };
 
 export default Util;

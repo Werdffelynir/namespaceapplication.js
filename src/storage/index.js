@@ -1,5 +1,4 @@
 
-
 /**
  * Add item by name
  * @param name
@@ -77,7 +76,7 @@ const Storage = function (name, value) {
                 key: key,
                 clear: clear,
                 remove: remove,
-                length: length
+                length: length,
             };
         case 1:
             return get(name);
@@ -85,6 +84,14 @@ const Storage = function (name, value) {
             return set(name, value);
     }
 };
+
+//
+Storage.set = set;
+Storage.get = get;
+Storage.key = key;
+Storage.clear = clear;
+Storage.remove = remove;
+Storage.size = length;
 
 export {
     set,

@@ -4,6 +4,7 @@
   "Components Auth Form": "/component/AuthformComponent.js",
   "Tasks": "/tasks/index.js",
   "Cookies": "/cookies/index.js",
+  "Storage": "/storage/index.js",
   "redirect": {
     "Component Integration": "component_integration.html"
   },
