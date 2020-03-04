@@ -6,7 +6,8 @@
   "Cookies": "/cookies/index.js",
   "Storage": "/storage/index.js",
   "redirect": {
-    "Component Integration": "component_integration.html"
+    "Component Integration": "component_integration.html",
+    "Test File": "test.html"
   },
   "__": "/__/__.js"
 }

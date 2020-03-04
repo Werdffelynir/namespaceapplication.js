@@ -15,9 +15,8 @@ Util.domLoaded(() => {
         js: [
             '/demo/tasks/src/MainComponent.js',
         ],
-        complete (complete) {
+        complete (list) {
             app.component.register(app);
-            //app.component('MainComponent').render();
         },
 
         error (error) {

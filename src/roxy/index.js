@@ -53,9 +53,15 @@ const Roxy = function (payload)
             return key ? proxy[key] : copy(proxy);
         },
 
-        fill (payload) {
+        fill (payload, to) {
             Object.keys(payload).forEach((key) => {
-                proxy[key] = payload[key]
+                if (to) {
+                    if (!proxy[to])
+                        proxy[to] = {};
+                    proxy[to][key] = payload[key]
+                } else {
+                    proxy[key] = payload[key]
+                }
             });
 
             return this;

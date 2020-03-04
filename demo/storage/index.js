@@ -1,12 +1,12 @@
-let { Storage } = NamespaceApplication;
+let { Store } = NamespaceApplication;
 
 let storeName = 'DEFAULT_COOKIE_NAME';
 
 function s () {
-    Storage.set(storeName, {a: 1, b:2, c: 3});
-    console.log(Storage.get(storeName));
-    console.log(Storage.size());
-    console.log(Storage().length());
+    Store.set(storeName, {a: 1, b:2, c: 3});
+    console.log(Store.get(storeName));
+    console.log(Store.size());
+    console.log(Store().length());
 }
 
 s();

@@ -52,7 +52,7 @@ const clear = function () {
 };
 
 /**
- * Returns an integer representing the number of data items stored in the Storage object.
+ * Returns an integer representing the number of data items stored in the Store object.
  * @returns {number}
  */
 const length = function () {
@@ -64,10 +64,10 @@ const length = function () {
  *
  * @param name
  * @param value
- * @returns {{set: (Storage.set|*), get: (Storage.get|*), key: (Storage.key|*), clear: (Storage.clear|*), remove: (Storage.remove|*), length: (Storage.length|*)}}
+ * @returns {{set: (Store.set|*), get: (Store.get|*), key: (Store.key|*), clear: (Store.clear|*), remove: (Store.remove|*), length: (Store.length|*)}}
  * @constructor
  */
-const Storage = function (name, value) {
+const Store = function (name, value) {
     switch (arguments.length) {
         case 0:
             return {
@@ -86,12 +86,12 @@ const Storage = function (name, value) {
 };
 
 //
-Storage.set = set;
-Storage.get = get;
-Storage.key = key;
-Storage.clear = clear;
-Storage.remove = remove;
-Storage.size = length;
+Store.set = set;
+Store.get = get;
+Store.key = key;
+Store.clear = clear;
+Store.remove = remove;
+Store.size = length;
 
 export {
     set,
@@ -102,4 +102,4 @@ export {
     length,
 };
 
-export default Storage;
+export default Store;

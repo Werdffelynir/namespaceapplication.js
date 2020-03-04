@@ -1,7 +1,7 @@
 import NamespaceApplication from "./NamespaceApplication";
 import Util from "./util";
 import Cookie from "./cookie";
-import Storage from "./storage";
+import Store from "./store";
 import Datetime from "./datetime";
 import EventManager from "./event-manager";
 import Timer from "./timer";
@@ -15,7 +15,7 @@ import Roxy from "./roxy";
 window.NamespaceApplication = NamespaceApplication;
 window.NamespaceApplication.Util = Util;
 window.NamespaceApplication.Cookie = Cookie;
-window.NamespaceApplication.Storage = Storage;
+window.NamespaceApplication.Store = Store;
 window.NamespaceApplication.Datetime = Datetime;
 window.NamespaceApplication.EventManager = EventManager;
 window.NamespaceApplication.Timer = Timer;
