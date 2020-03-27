@@ -1,6 +1,6 @@
 (() => {
 
-    let { Roxy, Store, Dom } = NamespaceApplication;
+    let { Roxy, Store, Dom, Datetime } = NamespaceApplication;
 
     const app = new NamespaceApplication({
         id: '#app',
@@ -145,7 +145,6 @@
                             }
                         });
                         proxy.list = [...proxy.list]
-                        // Store('tasks', proxy.list);
                     });
                     this.data.comment = null;
                 }
@@ -191,7 +190,7 @@ font-size: 10px;
 }
 
 .create button{
-    padding: 1.1rem;
+    padding: 0.7rem;
     border: 1px solid #b1b6ff;
 }
 .create {}
@@ -203,13 +202,13 @@ font-size: 10px;
                 <input on-input="name" type="text" class="">
             </div>
             <div class="text-right">
-                <input type="date"> - <input type="date">
+                <input on-change="date_start" type="date"> - <input on-change="date_end" type="date">
             </div>
             <div class="width-15 text-right">
                 <button on-click="add">Add task</button>
             </div>
         </div>
-        <textarea></textarea>
+        <textarea on-change="description" ></textarea>
         <div data-node="content"></div>
     </div>
     <div id="sidebar" class="valign-top" data-node="sidebar"></div>
@@ -247,16 +246,35 @@ font-size: 10px;
                 this.data.nameTarget = e.target;
                 this.data.name = e.target.value;
             },
+            date_start(e) {
+                this.data.date_startTarget = e.target;
+                this.data.date_start = e.target.value;
+            },
+            date_end(e) {
+                this.data.date_endTarget = e.target;
+                this.data.date_end = e.target.value;
+            },
+            description(e) {
+                this.data.descriptionTarget = e.target;
+                this.data.description = e.target.value;
+            },
             add(e) {
                 RxList.set((proxy) => {
+                    const date = new Date();
                     proxy.list.push({
                         ...Item, ...{
                             id: '_tmp_' + proxy.list.length,
                             name: this.data.name,
-                            date: Date(),
+                            date: date.getFullYear() + '-' + (date.getMonth() + 1) + '.' + (date.getDay() + 1) ,
+                            date_start: this.data.date_start,
+                            date_end: this.data.date_end,
+                            description: this.data.name,
                         }
                     });
                     this.data.nameTarget.value = '';
+                    this.data.date_startTarget.value = '';
+                    this.data.date_endTarget.value = '';
+                    this.data.descriptionTarget.value = '';
                     return proxy;
                 });
             },
