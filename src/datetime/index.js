@@ -56,9 +56,9 @@ Datetime.betweenDates = function (dateFrom, dateTo) {
  * ss - the second as a number with a leading zero ( 00 to 59 );
  * aa - displays am (for times from midnight until noon) and pm (for times from noon until midnight);
  *
- * .strToDate('12.05.2017 12:30:25', 'mm.dd.YY HH:ii:ss')
- * .strToDate('12/05/2017', 'mm/dd/YY')
- * .strToDate('12/5/2017', 'mm/dd/YY', true)
+ * Datetime.strToDate('12.05.2017 12:30:25', 'mm.dd.YY HH:ii:ss')
+ * Datetime.strToDate('12/05/2017', 'mm/dd/YY')
+ * Datetime.strToDate('12/5/2017', 'mm/dd/YY', true)
  * @param date
  * @param format
  * @param utc

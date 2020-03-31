@@ -13,11 +13,18 @@
     <div id="app" class="valign-top"></div>
 </div>
 <script>
-    const {
+
+    let {
         Util,
         Dom,
-        Roxy,
+        Storage,
+        SessionStorage
     } = NamespaceApplication;
+
+    // Storage.set('a', 'AAA');
+    // SessionStorage.set('b', 'BBB');
+    // console.log(Storage.get('a'));
+    // console.log(SessionStorage.get('b'));
 
     // const TEST_SCRIPT = '/demo/tasks/index.js';
     // if (TEST_SCRIPT) {
