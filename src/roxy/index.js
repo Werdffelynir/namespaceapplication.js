@@ -136,7 +136,7 @@ export default Roxy;
 export const RoxyListener = function (payload) {
 
     const actions = {
-        __action__ () {}
+        __action__() {}
     };
 
     const actionsNames = {};
@@ -150,6 +150,10 @@ export const RoxyListener = function (payload) {
     });
 
     const rx = Roxy(actionsNames);
+
+    rx.actions = function () {
+        return actionsNames
+    };
 
     rx.action((event_cursor, values) => {
         actions.__action__.call(actions, event_cursor, values);
