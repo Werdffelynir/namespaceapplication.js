@@ -11,6 +11,7 @@ import httpRequest from "./http-request";
 import Dom from "./dom";
 import Str from "./str";
 import Roxy from "./roxy";
+import {RoxyListener} from "./roxy";
 
 
 window.NamespaceApplication = NamespaceApplication;
@@ -26,3 +27,4 @@ window.NamespaceApplication.httpRequest = httpRequest;
 window.NamespaceApplication.Dom = Dom;
 window.NamespaceApplication.Str = Str;
 window.NamespaceApplication.Roxy = Roxy;
+window.NamespaceApplication.RoxyListener = RoxyListener;
