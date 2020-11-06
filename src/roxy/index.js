@@ -136,7 +136,7 @@ export default Roxy;
 export const RoxyListener = function (payload) {
 
     const actions = {
-        __action__ () {}
+        __action__() {}
     };
 
     const actionsNames = {};
