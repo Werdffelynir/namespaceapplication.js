@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Roxy example</title>
+    <link rel="stylesheet" href="/demo/assets/css/grid.build.css">
+
+    <!--    <link rel="stylesheet" href="http://gridcss/dist/main.css">-->
+    <!--    <script src="http://namespaceapplication.js/dist/na.bundle.js"></script>-->
+
+    <script src="/dist/na.bundle.js" data-config=""></script>
+</head>
+<body>
+<div id="app">
+    <div id="card">
+        <div id="title" data-rx="title">title</div>
+        <div id="body" data-rx="body">body</div>
+        <div id="bottom" data-rx="bottom">bottom</div>
+    </div>
+</div>
+<script>
+    const {Util, Timer, Dom, Roxy, RoxyListener} = NamespaceApplication;
+
+    const rx = RoxyListener({
+        __action__ (event, value) {
+            setTo(event, value);
+            console.log(event, value);
+        },
+
+        title (event, value) {
+            // ..
+        },
+
+        body (event, value) {
+            // ...
+        },
+    });
+
+    rx.dispatch('title', 'Hello friend');
+
+    Timer.timeout(() => {
+        rx.dispatch('title', 'Do you happy now?');
+    }, 1000);
+
+    Timer.timeout(() => {
+        rx.dispatch('title', 'No yes ofcourse!');
+    }, 2000);
+
+
+    function setTo(id, context) {
+        const elem = Dom('#' + id);
+        elem.inject(context);
+    }
+
+
+</script>
+</body>
+</html>
