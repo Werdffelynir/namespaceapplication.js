@@ -151,6 +151,10 @@ export const RoxyListener = function (payload) {
 
     const rx = Roxy(actionsNames);
 
+    rx.actions = function () {
+        return actionsNames
+    };
+
     rx.action((event_cursor, values) => {
         actions.__action__.call(actions, event_cursor, values);
 
