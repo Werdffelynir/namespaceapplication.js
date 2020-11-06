@@ -18,7 +18,7 @@ import position from "../static/position";
 import merge from "../static/merge";
 
 function Dom (selector) {
-    const $ = {
+    const root = {
         selector: typeOf(selector, 'string') ? selector : null,
         selected: isNode(selector) ? [selector] : queryAll(selector),
     };
@@ -32,36 +32,36 @@ function Dom (selector) {
         }
     };
 
-    $.one = () => $.selected && $.selected.length ? $.selected[0] : false;
-    $.all = () => $.selected;
-    $.attr = (name, value) => defined(value) ? attr($.one(), name, value) : attr($.one(), name);
-    $.inject = (data, append, to) => inject($.one(), data, append, to);
-    $.append = (data) => inject($.one(), data, true);
-    $.search = (attr, from) => search($.one(), attr, from);
-    $.parent = () => $.one().parentNode;
-    $.children = () => {
-        $.one()
+    root.one = () => root.selected && root.selected.length ? root.selected[0] : false;
+    root.all = () => root.selected;
+    root.attr = (name, value) => defined(value) ? attr(root.one(), name, value) : attr(root.one(), name);
+    root.inject = (data, append, to) => inject(root.one(), data, append, to);
+    root.append = (data) => inject(root.one(), data, true);
+    root.search = (attr, from) => search(root.one(), attr, from);
+    root.parent = () => root.one().parentNode;
+    root.children = () => {
+        root.one()
     };
-    $.position = () => position($.one());
-    $.query = (selector) => $.one().querySelector(selector);
-    $.queryAll = (selector) => $.one().querySelectorAll(selector);
-    $.x = () => position($.one()).x;
-    $.y = () => position($.one()).y;
-    $.width = () => position($.one()).width;
-    $.height = () => position($.one()).height;
-    $.remove = () => $.one().parentNode.removeChild($.one());
-    $.show = () => {
-        const src = $.one();
+    root.position = () => position(root.one());
+    root.query = (selector) => root.one().querySelector(selector);
+    root.queryAll = (selector) => root.one().querySelectorAll(selector);
+    root.x = () => position(root.one()).x;
+    root.y = () => position(root.one()).y;
+    root.width = () => position(root.one()).width;
+    root.height = () => position(root.one()).height;
+    root.remove = () => root.one().parentNode.removeChild(root.one());
+    root.show = () => {
+        const src = root.one();
         _set_real_display_style(src);
         css(src, {display: src && src['real-display-style'] ? src['real-display-style'] : 'block'});
     };
-    $.hide = () => {
-        const src = $.one();
+    root.hide = () => {
+        const src = root.one();
         _set_real_display_style(src);
         css(src, {display: 'none'});
     };
-    $.toggle = () => {
-        const src = $.one();
+    root.toggle = () => {
+        const src = root.one();
         if (typeOf(src, 'string')) {
             queryAll(src).map(Dom.toggle);
         } else if (isNode(src)) {
@@ -69,12 +69,12 @@ function Dom (selector) {
             else Dom.hide(src);
         }
     };
-    $.on = (eventName, callback, bubble) => on($.one(), eventName, callback, bubble);
-    $.coords = () => {
-        const coords = $.one().getBoundingClientRect();
+    root.on = (eventName, callback, bubble) => on(root.one(), eventName, callback, bubble);
+    root.coords = () => {
+        const coords = root.one().getBoundingClientRect();
         return merge({top: coords.top + pageYOffset, left: coords.left + pageXOffset}, coords);
     };
-    return $;
+    return root;
 }
 
 Dom.attr = attr;

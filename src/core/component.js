@@ -11,9 +11,6 @@ import copy from "../static/copy";
 
 const component = function (config) {
     if (typeof config === 'string') {
-
-
-
         return component.list[config];
     } else {
         const comp = component.create(config);
@@ -38,6 +35,7 @@ const component = function (config) {
 
             attributesEventsHandler(comp, 'on', Object.keys(EVENTS_NAMES_BASIC));
         }
+
 
         if (this instanceof NamespaceApplication) {
             injectComponent (comp, this);
@@ -131,8 +129,9 @@ function injectComponent (comp, instance) {
                     }
                 });
             }
-            if (node !== comp.template)
+            if (comp.template && comp.template !== node ) {
                 inject(node, comp.template);
+            }
         });
 
     return comp;

@@ -46,6 +46,6 @@ class NamespaceApplication
 
 NamespaceApplication.component = component;
 NamespaceApplication.extension = extension;
-NamespaceApplication.MODE_DEBUG = 'debug';
+NamespaceApplication.DEBUG = true;
 
 export default NamespaceApplication;
