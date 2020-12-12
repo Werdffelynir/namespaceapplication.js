@@ -1,0 +1,17 @@
+## ƒ Dom(selector)
+```javascript
+attr: ƒ attr(element, name, value)
+create: ƒ createElement(tag, attrs, inner)
+css: ƒ css(selector, properties)
+fragment: ƒ createFragment(append)
+inject: ƒ inject(selector, data, append, to)
+loaded: ƒ domLoaded(callback)
+node2str: ƒ node2str(element)
+position: ƒ position(elem)
+query: ƒ query(selector, from, callback, thisInstance)
+queryAll: ƒ queryAll(selector, from, callback, thisInstance)
+search: ƒ search(selector, attr, from)
+str2node: ƒ str2node(string)
+on: ƒ on(selector, eventName, callback, bubble)
+id: ƒ id(selector)
+```

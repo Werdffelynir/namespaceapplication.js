@@ -22,6 +22,9 @@ function Dom (selector) {
         selector: typeOf(selector, 'string') ? selector : null,
         selected: isNode(selector) ? [selector] : queryAll(selector),
     };
+    root.selected.forEach((elem, i) => {
+        root[i] = elem;
+    });
 
     const _set_real_display_style = function (src) {
         if (typeOf(src, 'string')) {
@@ -77,6 +80,8 @@ function Dom (selector) {
     return root;
 }
 
+Dom.on = on;
+Dom.id = (element) => document.getElementById(element);
 Dom.attr = attr;
 Dom.css = css;
 Dom.loaded = domLoaded;
