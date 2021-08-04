@@ -2,7 +2,13 @@ import isNode from './isNode';
 import queryAll from './queryAll';
 import query from './query';
 
-
+/**
+ * search('[data-on]', 'data-on')
+ * @param selector
+ * @param attr
+ * @param from
+ * @return {{}}
+ */
 const search = function (selector, attr, from) {
     from = isNode(from) ? from : query(from);
     let i = 0,

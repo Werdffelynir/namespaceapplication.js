@@ -36,12 +36,16 @@ import typeOf from "../static/typeOf";
 import typeOfStrict from "../static/typeOfStrict";
 import uri from "../static/uri";
 import copy from "../static/copy";
+import toArray from "../static/toArray";
+import toMap from "../static/toMap";
 
 const Util = {
     attr,
     createElement,
     createFragment,
     css,
+    copy,
+    clone: copy,
     domLoaded,
     inject,
     str2node,
@@ -80,8 +84,8 @@ const Util = {
     typeOf,
     typeOfStrict,
     uri,
-    copy,
-    clone: copy,
+    toArray,
+    toMap,
 };
 
 export default Util;

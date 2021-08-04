@@ -28,3 +28,4 @@ window.NamespaceApplication.Dom = Dom;
 window.NamespaceApplication.Str = Str;
 window.NamespaceApplication.Roxy = Roxy;
 window.NamespaceApplication.RoxyListener = RoxyListener;
+window.Ns = window.NamespaceApplication;
