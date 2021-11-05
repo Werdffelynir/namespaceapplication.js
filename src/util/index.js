@@ -38,6 +38,7 @@ import uri from "../static/uri";
 import copy from "../static/copy";
 import toArray from "../static/toArray";
 import toMap from "../static/toMap";
+import midNumber from "../static/midNumber";
 
 const Util = {
     attr,
@@ -86,6 +87,7 @@ const Util = {
     uri,
     toArray,
     toMap,
+    midNumber,
 };
 
 export default Util;

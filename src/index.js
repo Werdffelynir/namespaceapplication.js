@@ -10,6 +10,7 @@ import Emmet from "./emmet";
 import httpRequest from "./http-request";
 import Dom from "./dom";
 import Str from "./str";
+import Arr from "./arr";
 import Roxy from "./roxy";
 import {RoxyListener} from "./roxy";
 
@@ -26,6 +27,7 @@ window.NamespaceApplication.Emmet = Emmet;
 window.NamespaceApplication.httpRequest = httpRequest;
 window.NamespaceApplication.Dom = Dom;
 window.NamespaceApplication.Str = Str;
+window.NamespaceApplication.Arr = Arr;
 window.NamespaceApplication.Roxy = Roxy;
 window.NamespaceApplication.RoxyListener = RoxyListener;
 window.Ns = window.NamespaceApplication;
